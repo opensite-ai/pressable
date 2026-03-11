@@ -1,6 +1,6 @@
 {
   "name": "@page-speed/pressable",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Performance-optimized universal link/button component with automatic URL detection and normalization for DashTrack ecosystem",
   "license": "BSD-3-Clause",
   "private": false,
@@ -57,7 +57,7 @@
     "prepublishOnly": "pnpm run test && pnpm run build"
   },
   "dependencies": {
-    "@page-speed/router": "^1.0.0",
+    "@page-speed/router": "1.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "tailwind-merge": "^2.2.0"
