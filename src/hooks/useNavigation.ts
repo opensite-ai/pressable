@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useNavigation as useRouterNavigation, useUrl, isBrowser } from "@page-speed/router";
 import type { UseNavigationArgs, UseNavigationReturn, LinkType } from "../types";
 
 /**
@@ -99,8 +100,8 @@ function isPhoneNumber(input: string): boolean {
  * - "https://jordansite.com/blog-123"
  * - "https://www.jordansite.com/blog-123"
  */
-function isInternalUrl(href: string): boolean {
-  if (typeof window === "undefined") {
+function isInternalUrl(href: string, currentOrigin: string, currentHref: string): boolean {
+  if (!isBrowser()) {
     // SSR fallback: assume relative paths are internal
     return href.startsWith("/") && !href.startsWith("//");
   }
@@ -114,8 +115,7 @@ function isInternalUrl(href: string): boolean {
 
   // Check if full URL matches current origin
   try {
-    const url = new URL(trimmed, window.location.href);
-    const currentOrigin = window.location.origin;
+    const url = new URL(trimmed, currentHref);
 
     // Normalize both origins (remove www. for comparison)
     const normalizeOrigin = (origin: string) =>
@@ -130,8 +130,8 @@ function isInternalUrl(href: string): boolean {
 /**
  * Converts a full URL to a relative path if it's internal
  */
-function toRelativePath(href: string): string {
-  if (typeof window === "undefined") {
+function toRelativePath(href: string, currentOrigin: string, currentHref: string): string {
+  if (!isBrowser()) {
     return href;
   }
 
@@ -143,8 +143,7 @@ function toRelativePath(href: string): string {
   }
 
   try {
-    const url = new URL(trimmed, window.location.href);
-    const currentOrigin = window.location.origin;
+    const url = new URL(trimmed, currentHref);
 
     // Normalize both origins for comparison
     const normalizeOrigin = (origin: string) =>
@@ -194,6 +193,10 @@ export function useNavigation({
   href,
   onClick,
 }: UseNavigationArgs = {}): UseNavigationReturn {
+  // Get router navigation functions and current URL (SSR-safe)
+  const { navigateTo } = useRouterNavigation();
+  const currentUrl = useUrl();
+
   const linkType = React.useMemo((): LinkType => {
     if (!href || href.trim() === "") {
       return onClick ? "none" : "none";
@@ -212,7 +215,7 @@ export function useNavigation({
     }
 
     // Check for internal vs external
-    if (isInternalUrl(trimmed)) {
+    if (isInternalUrl(trimmed, currentUrl.origin, currentUrl.href)) {
       return "internal";
     }
 
@@ -220,14 +223,14 @@ export function useNavigation({
     try {
       new URL(
         trimmed,
-        typeof window !== "undefined" ? window.location.href : "http://localhost"
+        currentUrl.href || "http://localhost"
       );
       return "external";
     } catch {
       // Not a valid URL, treat as internal path
       return "internal";
     }
-  }, [href, onClick]);
+  }, [href, onClick, currentUrl.origin, currentUrl.href]);
 
   const normalizedHref = React.useMemo((): string | undefined => {
     if (!href || href.trim() === "") {
@@ -242,13 +245,13 @@ export function useNavigation({
       case "mailto":
         return normalizeEmail(trimmed);
       case "internal":
-        return toRelativePath(trimmed);
+        return toRelativePath(trimmed, currentUrl.origin, currentUrl.href);
       case "external":
         return trimmed;
       default:
         return trimmed;
     }
-  }, [href, linkType]);
+  }, [href, linkType, currentUrl.origin, currentUrl.href]);
 
   const target = React.useMemo((): "_blank" | "_self" | undefined => {
     switch (linkType) {
@@ -305,26 +308,13 @@ export function useNavigation({
         !event.ctrlKey &&
         !event.shiftKey
       ) {
-        // Check if there's a navigation handler (from opensite-blocks or similar)
-        if (typeof window !== "undefined") {
-          const handler = (window as any).__opensiteNavigationHandler;
-          if (typeof handler === "function") {
-            try {
-              const handled = handler(
-                normalizedHref,
-                event.nativeEvent || event
-              );
-              if (handled !== false) {
-                event.preventDefault();
-              }
-            } catch (error) {
-              console.error("Error in navigation handler:", error);
-            }
-          }
-        }
+        event.preventDefault();
+
+        // Use the router's navigateTo for internal navigation
+        navigateTo(normalizedHref);
       }
     },
-    [onClick, shouldUseRouter, normalizedHref]
+    [onClick, shouldUseRouter, normalizedHref, navigateTo]
   );
 
   return {
