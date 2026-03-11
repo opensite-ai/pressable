@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@page-speed/router':
-        specifier: 1.0.1
-        version: 1.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.0.2
+        version: 1.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
@@ -429,8 +429,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@page-speed/router@1.0.1':
-    resolution: {integrity: sha512-r57xFwS34z1W3rafZn7XfQFGHSs4hTdGMJbec2C26EIqQe8buTntlM9elivJrezQeC4Hq9xJmge1CYHFhJwOWA==}
+  '@page-speed/router@1.0.2':
+    resolution: {integrity: sha512-4yPyIJVZ0fgZYYLTbVq1+s88qddD9pnWHPPm0sRdPufMSBiUdypFLR/2aEg+vT/YOdJ0YUqm5Rb1AYOmTe14Ug==}
     engines: {node: '>=18.0.0', pnpm: '>=9.0.0'}
     peerDependencies:
       react: '>=17.0.0'
@@ -2327,7 +2327,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@page-speed/router@1.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@page-speed/router@1.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
