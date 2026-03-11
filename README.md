@@ -1,6 +1,15 @@
 # @page-speed/pressable
 
-Performance-optimized universal link/button component with automatic URL detection and normalization for the DashTrack ecosystem.
+## Performance-optimized universal link/button component with automatic URL detection and normalization for the [OpenSite Semantic Site Builder](https://opensite.ai) ecosystem. Provides tree-shakable, performance-optimized components with abstract styling support
+
+![Page Speed Pressable Component](https://octane.cdn.ing/api/v1/images/transform?url=https://cdn.ing/assets/i/r/293695/lsctquoi97zr5zg1vitd0zia1hmu/banner.png&f=webp)
+
+<br />
+
+[![npm version](https://img.shields.io/npm/v/@page-speed/pressable?style=for-the-badge)](https://www.npmjs.com/package/@page-speed/pressable)
+[![npm downloads](https://img.shields.io/npm/dm/@page-speed/pressable?style=for-the-badge)](https://www.npmjs.com/package/@page-speed/pressable)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge)](./tsconfig.json)
+[![Tree-Shakeable](https://img.shields.io/badge/Tree%20Shakeable-Yes-brightgreen?style=for-the-badge)](#tree-shaking)
 
 ## Features
 
