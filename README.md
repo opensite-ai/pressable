@@ -45,6 +45,85 @@ yarn add @page-speed/pressable
 }
 \`\`\`
 
+## Setup Requirements
+
+### 1. Tailwind CSS Configuration
+
+**CRITICAL**: Add `@page-speed/pressable` to your Tailwind content paths so button styles are included:
+
+\`\`\`ts
+// tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    // Add this line to scan Pressable's button-variant classes:
+    "./node_modules/@page-speed/pressable/dist/**/*.{js,mjs}",
+  ],
+  // ...rest of config
+};
+\`\`\`
+
+Without this, button variants won't have styles applied because Tailwind will purge the classes.
+
+### 2. Router Setup (For Navigation)
+
+Wrap your app with \`RouterProvider\` from \`@page-speed/router\` to enable internal navigation.
+
+**For Next.js App Router** (requires client component wrapper):
+
+\`\`\`tsx
+// components/providers/RouterWrapper.tsx
+"use client";
+
+import { RouterProvider } from "@page-speed/router";
+import { ReactNode } from "react";
+
+export function RouterWrapper({ children }: { children: ReactNode }) {
+  return <RouterProvider>{children}</RouterProvider>;
+}
+\`\`\`
+
+\`\`\`tsx
+// app/layout.tsx
+import { RouterWrapper } from "@/components/providers/RouterWrapper";
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <body>
+        <RouterWrapper>
+          {children}
+        </RouterWrapper>
+      </body>
+    </html>
+  );
+}
+\`\`\`
+
+**For standard React apps** (Create React App, Vite, etc.):
+
+\`\`\`tsx
+// App.tsx
+import { RouterProvider } from "@page-speed/router";
+
+function App() {
+  return (
+    <RouterProvider>
+      {/* your app */}
+    </RouterProvider>
+  );
+}
+\`\`\`
+
+Install \`@page-speed/router\` directly for better type support:
+
+\`\`\`bash
+pnpm add @page-speed/router
+\`\`\`
+
 ## Basic Usage
 
 ### Simple Link

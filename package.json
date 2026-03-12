@@ -1,6 +1,6 @@
 {
   "name": "@page-speed/pressable",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Performance-optimized universal link/button component with automatic URL detection and normalization for DashTrack ecosystem",
   "license": "BSD-3-Clause",
   "private": false,
