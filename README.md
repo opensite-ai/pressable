@@ -59,8 +59,13 @@ const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    // Add this line to scan Pressable's button-variant classes:
-    "./node_modules/@page-speed/pressable/dist/**/*.{js,mjs}",
+    // Add one of these lines to scan Pressable's button-variant classes:
+
+    // For standard npm/yarn installations:
+    "./node_modules/@page-speed/pressable/dist/**/*.{js,cjs}",
+
+    // For pnpm monorepos (use both if unsure):
+    "./node_modules/.pnpm/@page-speed+pressable*/node_modules/@page-speed/pressable/**/*.{js,jsx,ts,tsx}",
   ],
   // ...rest of config
 };
