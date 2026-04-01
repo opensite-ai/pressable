@@ -11,6 +11,7 @@ import { cva } from "class-variance-authority";
  * ### Master Button Variables (apply to all variants)
  * - `--button-font-family` - Font family (default: inherit)
  * - `--button-font-weight` - Font weight (default: 500)
+ * - `--button-font-style` - Font style (default: normal)
  * - `--button-letter-spacing` - Letter spacing (default: 0)
  * - `--button-line-height` - Line height (default: 1.25)
  * - `--button-text-transform` - Text transform (default: none)
@@ -41,8 +42,9 @@ const baseStyles = [
   // Layout
   "inline-flex items-center justify-center gap-2 whitespace-nowrap shrink-0",
   // Typography - using CSS variables with sensible defaults
-  "font-[var(--button-font-family,inherit)]",
-  "font-[var(--button-font-weight,500)]",
+  "[font-family:var(--button-font-family,inherit)]",
+  "[font-weight:var(--button-font-weight,500)]",
+  "[font-style:var(--button-font-style,normal)]",
   "tracking-[var(--button-letter-spacing,0)]",
   "leading-[var(--button-line-height,1.25)]",
   "[text-transform:var(--button-text-transform,none)]",
