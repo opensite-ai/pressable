@@ -42,6 +42,26 @@ describe("Pressable", () => {
       const link = screen.getByRole("link");
       expect(link).toHaveClass("inline-flex");
     });
+
+    it("applies full button sizing to link variant anchors", () => {
+      render(
+        <Pressable href="/curriculum" asButton variant="link">
+          View Our Curriculum
+        </Pressable>
+      );
+
+      const link = screen.getByRole("link");
+      expect(link).toHaveAttribute("data-variant", "link");
+      expect(link).toHaveClass(
+        "inline-flex",
+        "items-center",
+        "justify-center",
+        "text-sm",
+        "h-[var(--button-height-md,2.25rem)]",
+        "px-[var(--button-padding-x-md,1rem)]",
+        "py-[var(--button-padding-y-md,0.5rem)]"
+      );
+    });
   });
 
   describe("Button rendering", () => {

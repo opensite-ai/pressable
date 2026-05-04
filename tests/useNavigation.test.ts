@@ -8,7 +8,7 @@ describe("useNavigation", () => {
 
   beforeEach(() => {
     delete (window as any).location;
-    window.location = {
+    (window as any).location = {
       ...originalLocation,
       href: "https://example.com",
       origin: "https://example.com",
@@ -16,7 +16,7 @@ describe("useNavigation", () => {
   });
 
   afterEach(() => {
-    window.location = originalLocation;
+    (window as any).location = originalLocation;
   });
 
   describe("Link type detection", () => {

@@ -152,11 +152,11 @@ export const Pressable = React.forwardRef<
       return (
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
+          {...(props as LinkProps)}
           href={normalizedHref}
           target={target}
           rel={rel}
           {...commonProps}
-          {...(props as LinkProps)}
         >
           {children}
         </a>
@@ -168,9 +168,9 @@ export const Pressable = React.forwardRef<
       return (
         <button
           ref={ref as React.Ref<HTMLButtonElement>}
+          {...(props as ButtonProps)}
           type={(props as ButtonProps).type || "button"}
           {...commonProps}
-          {...(props as ButtonProps)}
         >
           {children}
         </button>
