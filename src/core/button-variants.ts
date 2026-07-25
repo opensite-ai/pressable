@@ -97,10 +97,14 @@ export const buttonVariants = cva(baseStyles, {
         "dark:bg-destructive/60",
       ].join(" "),
 
-      // Outline variant - full customization with proper border handling
+      // Outline variant - full customization with proper border handling.
+      // The fg fallback MUST be a concrete token, not `inherit`: the pill bg
+      // falls back to --background (light), so inheriting a dark section's
+      // light text color rendered white-on-white labels. --foreground is the
+      // guaranteed contrast for the --background pill.
       outline: [
         "bg-[var(--button-outline-bg,hsl(var(--background)))]",
-        "text-[var(--button-outline-fg,inherit)]",
+        "text-[var(--button-outline-fg,hsl(var(--foreground)))]",
         "border-[length:var(--button-outline-border-width,1px)]",
         "border-[color:var(--button-outline-border,hsl(var(--border)))]",
         "[box-shadow:var(--button-outline-shadow,var(--button-shadow,0_1px_2px_0_rgb(0_0_0/0.05)))]",
@@ -111,15 +115,18 @@ export const buttonVariants = cva(baseStyles, {
         "dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
       ].join(" "),
 
-      // Secondary variant - full customization
+      // Secondary variant - full customization. The fg fallback chain ends in
+      // --foreground so an undefined --secondary-foreground cannot invalidate
+      // the color declaration (which made the label inherit a dark section's
+      // light text color instead of keeping its own).
       secondary: [
         "bg-[var(--button-secondary-bg,hsl(var(--secondary)))]",
-        "text-[var(--button-secondary-fg,hsl(var(--secondary-foreground)))]",
+        "text-[var(--button-secondary-fg,hsl(var(--secondary-foreground,var(--foreground))))]",
         "border-[length:var(--button-secondary-border-width,0px)]",
         "border-[color:var(--button-secondary-border,transparent)]",
         "[box-shadow:var(--button-secondary-shadow,var(--button-shadow,none))]",
         "hover:bg-[var(--button-secondary-hover-bg,hsl(var(--secondary)/0.8))]",
-        "hover:text-[var(--button-secondary-hover-fg,var(--button-secondary-fg,hsl(var(--secondary-foreground))))]",
+        "hover:text-[var(--button-secondary-hover-fg,var(--button-secondary-fg,hsl(var(--secondary-foreground,var(--foreground)))))]",
         "hover:border-[color:var(--button-secondary-hover-border,var(--button-secondary-border,transparent))]",
         "hover:[box-shadow:var(--button-secondary-shadow-hover,var(--button-shadow-hover,var(--button-secondary-shadow,var(--button-shadow,none))))]",
       ].join(" "),
